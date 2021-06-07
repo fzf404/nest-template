@@ -2,6 +2,8 @@ import { Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose'
 import { UserSchma } from './schema/user.schema';
 
+require('dotenv').config()
+
 const MONGO_MODELS = MongooseModule.forFeature([
   {
     name: 'USER_MODEL',
@@ -13,7 +15,7 @@ const MONGO_MODELS = MongooseModule.forFeature([
 @Global()
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://39.106.106.202/demo_nest', {
+    MongooseModule.forRoot(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

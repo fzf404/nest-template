@@ -11,8 +11,6 @@ export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(HashPasswordMiddleware)
-      .forRoutes('user/regist')
-    // .apply(HashPasswordMiddleware)
-    // .forRoutes('auth/alter')
+      .forRoutes('regist')
   }
 }
