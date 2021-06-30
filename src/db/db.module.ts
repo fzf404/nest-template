@@ -1,16 +1,19 @@
 import { Global, Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose'
+import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchma } from './schema/user.schema';
+import { RedisModule } from 'nestjs-redis';
 
-require('dotenv').config()
+import { config } from 'dotenv';
+
+config();
 
 const MONGO_MODELS = MongooseModule.forFeature([
   {
     name: 'USER_MODEL',
     schema: UserSchma,
-    collection: "user"
-  }
-])
+    collection: 'user',
+  },
+]);
 
 @Global()
 @Module({
@@ -19,9 +22,14 @@ const MONGO_MODELS = MongooseModule.forFeature([
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: false
+      useFindAndModify: false,
     }),
-    MONGO_MODELS],
-  exports: [MONGO_MODELS]
+    RedisModule.register({
+      url: process.env.REDIS_URL,
+      name: 'redis_demo',
+    }),
+    MONGO_MODELS,
+  ],
+  exports: [MONGO_MODELS],
 })
-export class DbModule { }
+export class DbModule {}

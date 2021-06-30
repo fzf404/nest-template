@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
   constructor(
     // 获得反射troles内容
-    private readonly reflector: Reflector
-  ) { }
+    private readonly reflector: Reflector,
+  ) {}
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     // 获得反射troles内容
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     if (roles[0] == 'admin') {
-      return true
+      return true;
     }
     return false;
   }

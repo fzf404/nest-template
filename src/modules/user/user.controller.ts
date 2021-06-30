@@ -6,23 +6,21 @@ import { UserService } from './user.service';
 @Controller()
 @ApiTags('用户')
 export class UserController {
-  constructor(
-    private userService: UserService
-  ) { }
+  constructor(private userService: UserService) {}
 
   @Post('regist')
   @ApiOperation({
-    summary: '用户注册'
+    summary: '用户注册',
   })
   async registUser(@Body() userDto: User) {
-    return await this.userService.regist(userDto)
+    return await this.userService.regist(userDto);
   }
 
   @Get('redis')
   @ApiOperation({
-    summary: 'Redis测试'
+    summary: 'Redis测试',
   })
   async redisTest() {
-    return await this.userService.redisTest()
+    return await this.userService.redisTest();
   }
 }

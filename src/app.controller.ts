@@ -3,13 +3,13 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
 @Controller()
-@ApiTags("app")
+@ApiTags('app')
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get('/ping')
   @ApiOperation({
-    summary: "Ping"
+    summary: 'Ping',
   })
   getHello(): string {
     return this.appService.getPong();

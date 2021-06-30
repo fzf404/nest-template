@@ -3,11 +3,12 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
-require('dotenv').config()
+import { config } from 'dotenv';
 
+config();
 
 const port = process.env.PORT;
-const logger = new Logger("main.ts");
+const logger = new Logger('main.ts');
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
@@ -17,12 +18,14 @@ const bootstrap = async () => {
     .setVersion('1.0')
     .addBearerAuth(
       { type: 'http', scheme: 'Bearer', bearerFormat: 'JWT' },
-      'jwt'
+      'jwt',
     )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-ui', app, document);
 
   await app.listen(port);
-}
-bootstrap().then(() => logger.debug(`listen in http://localhost:${port}/api-ui`));
+};
+bootstrap().then(() =>
+  logger.debug(`listen in http://localhost:${port}/api-ui`),
+);

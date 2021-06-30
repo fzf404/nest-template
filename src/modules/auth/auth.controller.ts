@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Req, SetMetadata, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  SetMetadata,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/interfaces/user.interface';
@@ -9,38 +18,36 @@ import { AuthService } from './auth.service';
 @Controller('')
 @ApiTags('验证')
 export class AuthController {
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor(private authService: AuthService) {}
 
   @Post('login')
   // 设置Roles
   @ApiOperation({
-    summary: '登录'
+    summary: '登录',
   })
   async userLogin(@Body() userDto: User) {
-    return await this.authService.login(userDto)
+    return await this.authService.login(userDto);
   }
 
   @Get('islogin')
-  @Roles('admin')               // 设置Roles
-  // @UseGuards(AuthGuard)      // 旧首位
+  @Roles('admin') // 设置Roles
+  // @UseGuards(AuthGuard)      // 旧守卫
   @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth('jwt')         // swagger使用jwt
+  @ApiBearerAuth('jwt') // swagger使用jwt
   @ApiOperation({
-    summary: '登录验证'
+    summary: '登录验证',
   })
   async userValidate(@Req() req) {
-    return await this.authService.isLogin(req.user)
+    return await this.authService.isLogin(req.user);
   }
 
   @Post('alter')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth('jwt')
   @ApiOperation({
-    summary: '密码修改'
+    summary: '密码修改',
   })
   async userAlter(@Body() userDto: User, @Req() req) {
-    return await this.authService.alter(userDto, req.user.username)
+    return await this.authService.alter(userDto, req.user.username);
   }
 }

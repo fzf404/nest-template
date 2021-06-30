@@ -3,22 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from './db/db.module';
 import { UserModule } from './modules/user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { RedisModule, RedisModuleOptions } from 'nestjs-redis';
-
-require('dotenv').config()
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [
-    DbModule,
-    UserModule,
-    AuthModule,
-    RedisModule.register({
-      url: process.env.REDIS_URL,
-      name:'redis_demo'
-    })
-  ],
+  imports: [DbModule, UserModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
